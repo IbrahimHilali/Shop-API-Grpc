@@ -1,0 +1,43 @@
+syntax = "proto3";
+import 'google/protobuf/empty.proto';
+import 'google/api/http.proto';
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+import 'google/rpc/status.proto';
+import "Order.proto";
+
+import 'Product.proto';
+option java_package = "de.home.grpc";
+
+service CustomerService{
+
+  rpc getAllOrders(RelatedCustomerRequest) returns (OrdersResponse){
+    option (google.api.http) = {get: '/v1/customers/orders'};
+  };
+
+  rpc createOrder(CreateOrderRequest) returns (google.rpc.Status){
+    option (google.api.http) = {
+      post: '/v1/customers/{id}/orders',
+      body: '*'
+    };
+  };
+}
+message UpdateCustomerDetailsRequest{
+  uint64 id = 1;
+  string name = 2;
+}
+message GetCustomerRequest{
+  uint64 id = 1;
+}
+
+message DeleteCustomerRequest{
+  uint64 id = 1;
+}
+message CustomerResponse{
+  uint64 id = 1;
+  string name = 2;
+  uint64 departmentId = 3;
+}
+message AllCustomersResponse{
+  repeated CustomerResponse customer = 1;
+}

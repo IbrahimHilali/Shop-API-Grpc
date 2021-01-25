@@ -1,0 +1,47 @@
+syntax = "proto3";
+import 'google/protobuf/empty.proto';
+import 'google/api/http.proto';
+import 'google/api/annotations.proto';
+import 'google/rpc/status.proto';
+option java_package = "de.home.grpc";
+
+
+service ProductService{
+  rpc createProduct(CreateProductRequest) returns (google.rpc.Status){
+    option (google.api.http) = {post: '/v1/products/{id}', body:'*'};
+  };
+  rpc getAllProducts(google.protobuf.Empty) returns (ProductsResponse){
+    option (google.api.http) = {get: '/v1/products'};
+  };
+  rpc getProduct(ProductRequest) returns (ProductResponse){
+    option (google.api.http) = {get: '/v1/products/{id}'};
+  };
+  rpc updateProduct(CreateProductRequest) returns (ProductResponse){
+    option (google.api.http) = {patch: '/v1/products/{id}'};
+  };
+  rpc deleteProduct(ProductResponse) returns (ProductResponse){
+    option (google.api.http) = {delete: '/v1/products/{id}'};
+  };
+}
+
+message ProductRequest{
+  uint64 id = 1;
+}
+
+message CreateProductRequest{
+  uint64 id = 1;
+  string name = 2;
+  string description = 3;
+  uint64 price = 4;
+}
+
+
+message ProductResponse{
+  uint64 id = 1;
+  string name = 2;
+  string description = 3;
+  uint64 price = 4;
+}
+message ProductsResponse{
+  repeated ProductResponse  products = 1;
+}

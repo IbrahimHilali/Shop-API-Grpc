@@ -1,0 +1,28 @@
+syntax = "proto3";
+package de.home.grpc;
+import 'google/protobuf/empty.proto';
+import 'google/api/http.proto';
+import 'google/api/annotations.proto';
+import 'Customer.proto';
+option java_package = "de.home.grpc";
+option java_multiple_files = true;
+
+service Administrator{
+  rpc getAllCustomer(google.protobuf.Empty) returns (AllCustomersResponse){
+    option (google.api.http) = {get: '/v1/customers'};
+  };
+  rpc getCustomerDetails(GetCustomerRequest) returns (CustomerResponse){
+    option (google.api.http) = {get: '/v1/customers/{id}'};
+  };
+  rpc updateCustomerDetails(UpdateCustomerDetailsRequest) returns (CustomerResponse){
+    option (google.api.http) = {patch: '/v1/customers/{id}', body:'*'};
+  };
+  rpc deleteCustomer(DeleteCustomerRequest) returns (CustomerResponse){
+    option (google.api.http) = {delete: '/v1/customers/{id}'};
+  };
+
+
+}
+//requests
+
+

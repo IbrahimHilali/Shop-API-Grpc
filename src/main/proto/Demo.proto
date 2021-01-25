@@ -1,0 +1,30 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "google/rpc/status.proto";
+
+option java_package = "de.home.grpc";
+
+service DemoService{
+
+  rpc createAll(google.protobuf.Empty) returns (google.rpc.Status){
+    option (google.api.http) = {get: "/v1/demos"};
+  };
+
+  rpc createProducts(google.protobuf.Empty) returns (google.rpc.Status){
+    option (google.api.http) = {get: "/v1/demos/products"};
+  };
+
+  rpc createCustomers(google.protobuf.Empty) returns (google.rpc.Status){
+    option (google.api.http) = {get: "/v1/demos/customers"};
+  };
+
+  rpc createOrders(google.protobuf.Empty) returns (google.rpc.Status){
+    option (google.api.http) = {get: "/v1/demos/orders"};
+  };
+
+  rpc createDepartment(google.protobuf.Empty) returns (google.rpc.Status){
+    option (google.api.http) = {get: "/v1/demos/department"};
+  };
+}
+

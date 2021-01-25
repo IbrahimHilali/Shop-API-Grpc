@@ -1,0 +1,43 @@
+syntax = 'proto3';
+import 'google/protobuf/empty.proto';
+import 'google/api/annotations.proto';
+import 'google/api/http.proto';
+import 'google/rpc/status.proto';
+import 'Product.proto';
+option java_package = "de.home.grpc";
+
+service OrderService{
+  rpc getAllOrders(google.protobuf.Empty) returns (OrdersResponse){
+    option (google.api.http) = {get: '/v1/orders'};
+  };
+  rpc getOrder(OrderRequest) returns (OrderResponse){
+    option (google.api.http) = {get: '/v1/orders/{orderId}'};
+  };
+  rpc updateOrder(CreateOrderRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {patch: '/v1/orders/{orderId}'};
+  };
+  rpc deleteOrder(OrderRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {get: '/v1/orders/{orderId}'};
+  };
+}
+message OrderRequest{
+  uint64 orderId = 1;
+}
+message CreateOrderRequest{
+  int64 orderId = 1;
+  int64 customerId = 3;
+  int64 total = 4;
+  repeated ProductRequest products = 6;
+}
+
+message  OrderResponse{
+  int64 orderId = 1;
+  int64 customerId = 3;
+  int64 total = 4;
+}
+message OrdersResponse{
+  repeated OrderResponse orders = 1;
+}
+message RelatedCustomerRequest{
+  uint64 customerId = 1;
+}
